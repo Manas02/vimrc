@@ -1,3 +1,16 @@
+call plug#begin('~/.vim/plugged')
+
+Plug 'junegunn/goyo.vim'
+Plug 'morhetz/gruvbox'
+Plug 'kien/ctrlp.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'vim-scripts/bufexplorer.zip'
+Plug 'davidhalter/jedi-vim'
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'itchyny/lightline.vim'
+
+call plug#end()
+
 set history=500 " Sets how many lines of history VIM has to remember
 set nu " Sets number line
 filetype plugin on " Enable filetype plugins
@@ -9,11 +22,7 @@ nmap <leader>w :w!<cr>
 set wildmenu " Turn on the Wild menu
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
-if has("win16") || has("win32")
-    set wildignore+=.git\*,.hg\*,.svn\*
-else
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
-endif
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 set ruler "Always show current position
 set cmdheight=1 " Height of the command bar
 set hid " A buffer becomes hidden when it is abandoned
@@ -39,11 +48,11 @@ syntax enable  " Enable syntax highlighting
 if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
-try
-    colorscheme gruvbox
-catch
-endtry
 set background=dark
+colorscheme palenight "gruvbox
+"let g:lightline = { 'colorscheme': 'palenight' }
+set laststatus=2
+"set noshowmode
 set encoding=utf8 " Set utf8 as standard encoding and en_US as the standard language
 set ffs=unix,dos,mac " Use Unix as the standard file type
 " Turn backup off, since most stuff is in SVN, git etc. anyway...
@@ -66,7 +75,7 @@ set wrap "Wrap lines
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
+map <space> :source %<cr>
 map <C-space> ?
 map <silent> <leader><cr> :noh<cr> " Disable highlight when <leader><cr> is pressed
 " Smart way to move between windows
@@ -102,7 +111,6 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 set laststatus=2 " Always show the status line
 " Format the status line
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
-map 0 ^ " Remap VIM 0 to first non-blank character
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
     let save_cursor = getpos(".")
@@ -157,3 +165,49 @@ function! VisualSelection(direction, extra_filter) range
     let @/ = l:pattern
     let @" = l:saved_reg
 endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" GOYO Plugins
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:goyo_width=100
+let g:goyo_margin_top = 2
+let g:goyo_margin_bottom = 2
+nnoremap <silent> <leader>z :Goyo<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"CTRL-P
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ctrlp_working_path_mode = 0
+
+"" Quickly find and open a file in the current working directory
+let g:ctrlp_map = '<C-f>'
+
+map <leader>j :CtrlP<cr>
+"" Quickly find and open a buffer
+map <leader>b :CtrlPBuffer<cr>
+"" Quickly find and open a recently opened file
+map <leader>f :CtrlPMRU<CR>
+"
+let g:ctrlp_max_height = 20
+let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => Nerd Tree
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:NERDTreeWinPos = "right"
+let NERDTreeShowHidden=0
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+let g:NERDTreeWinSize=35
+map <leader>nn :NERDTreeToggle<cr>
+map <leader>nb :NERDTreeFromBookmark<Space>
+map <leader>nf :NERDTreeFind<cr>
+
+
+""""""""""""""""""""""""""""""
+"" => bufExplorer plugin
+"""""""""""""""""""""""""""""""
+let g:bufExplorerDefaultHelp=0
+let g:bufExplorerShowRelativePath=1
+let g:bufExplorerFindActive=1
+let g:bufExplorerSortBy='name'
+map <leader>o :BufExplorer<cr>
