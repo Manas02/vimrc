@@ -18,7 +18,6 @@ filetype indent on " Indentation
 set autoread " Set to auto read when a file is changed from the outside
 au FocusGained,BufEnter * checktime
 let mapleader = "," "Leader key is ,
-nmap <leader>w :w!<cr>
 set wildmenu " Turn on the Wild menu
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
@@ -40,7 +39,6 @@ set mat=2 " How many tenths of a second to blink when matching brackets
 " No annoying sound on errors
 set noerrorbells
 set novisualbell
-set t_vb=
 set tm=500
 set foldcolumn=1 " Add a bit extra margin to the left
 syntax enable  " Enable syntax highlighting
@@ -52,7 +50,7 @@ set background=dark
 colorscheme palenight "gruvbox
 "let g:lightline = { 'colorscheme': 'palenight' }
 set laststatus=2
-"set noshowmode
+set noshowmode
 set encoding=utf8 " Set utf8 as standard encoding and en_US as the standard language
 set ffs=unix,dos,mac " Use Unix as the standard file type
 " Turn backup off, since most stuff is in SVN, git etc. anyway...
@@ -78,6 +76,8 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 map <space> :source %<cr>
 map <C-space> ?
 map <silent> <leader><cr> :noh<cr> " Disable highlight when <leader><cr> is pressed
+"map ctrl-S to save
+map <C-s> :w!<cr>
 " Smart way to move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
@@ -108,9 +108,6 @@ endtry
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-set laststatus=2 " Always show the status line
-" Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
     let save_cursor = getpos(".")
@@ -201,7 +198,6 @@ let g:NERDTreeWinSize=35
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark<Space>
 map <leader>nf :NERDTreeFind<cr>
-
 
 """"""""""""""""""""""""""""""
 "" => bufExplorer plugin
