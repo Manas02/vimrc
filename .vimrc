@@ -1,18 +1,30 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'junegunn/goyo.vim'
-Plug 'morhetz/gruvbox'
-Plug 'kien/ctrlp.vim'
+""""""""""""""""""""""""""""""""
+"          Languauge           "
+""""""""""""""""""""""""""""""""
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+""""""""""""""""""""""""""""""""
+"           Editor             "
+""""""""""""""""""""""""""""""""
 Plug 'scrooloose/nerdtree'
 Plug 'vim-scripts/bufexplorer.zip'
-Plug 'davidhalter/jedi-vim'
-Plug 'drewtempelmeyer/palenight.vim'
 Plug 'itchyny/lightline.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'junegunn/goyo.vim'
+""""""""""""""""""""""""""""""""
+"            THEME             "
+""""""""""""""""""""""""""""""""
+Plug 'morhetz/gruvbox'
+Plug 'dracula/vim'
+Plug 'mhartington/oceanic-next'
+Plug 'drewtempelmeyer/palenight.vim'
 
 call plug#end()
 
 set history=500 " Sets how many lines of history VIM has to remember
-set nu " Sets number line
+set rnu" Sets number line
 filetype plugin on " Enable filetype plugins
 filetype indent on " Indentation    
 set autoread " Set to auto read when a file is changed from the outside
@@ -47,7 +59,7 @@ if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
 set background=dark
-colorscheme palenight "gruvbox
+colorscheme OceanicNext  "gruvbox/palenight/dracula/OceanicNext
 "let g:lightline = { 'colorscheme': 'palenight' }
 set laststatus=2
 set noshowmode
@@ -77,7 +89,7 @@ map <space> :source %<cr>
 map <C-space> ?
 map <silent> <leader><cr> :noh<cr> " Disable highlight when <leader><cr> is pressed
 "map ctrl-S to save
-map <C-s> :w!<cr>
+map <leader>w :w!<cr>
 " Smart way to move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
@@ -188,9 +200,9 @@ map <leader>f :CtrlPMRU<CR>
 let g:ctrlp_max_height = 20
 let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""
 "" => Nerd Tree
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""
 let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden=0
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
@@ -201,9 +213,10 @@ map <leader>nf :NERDTreeFind<cr>
 
 """"""""""""""""""""""""""""""
 "" => bufExplorer plugin
-"""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""
 let g:bufExplorerDefaultHelp=0
 let g:bufExplorerShowRelativePath=1
 let g:bufExplorerFindActive=1
 let g:bufExplorerSortBy='name'
 map <leader>o :BufExplorer<cr>
+
